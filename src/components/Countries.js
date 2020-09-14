@@ -1,7 +1,16 @@
 import React from 'react'
 import Country from './Country'
 
-const Result = ({ countries }) => {
+const Countries = ({ countries, onSelect }) => {
+
+  const listCountries = () => {
+    return countries.map(country => (
+      <div key={country.alpha3Code}>
+        {country.name} 
+        <button onClick={() => onSelect(country)}>show</button>
+      </div> 
+    ))
+  }
 
   if (countries.length > 10) {
     return (
@@ -9,10 +18,7 @@ const Result = ({ countries }) => {
     )
   } else if (countries.length <= 10 && countries.length > 1) {
     return (
-      <div>
-        {countries.map(country =>
-          (<div key={country.name}>{country.name}</div>))}
-      </div>
+      listCountries()
     )
   } else if (countries.length === 1) {
     return (
@@ -26,4 +32,4 @@ const Result = ({ countries }) => {
 
 }
 
-export default Result
+export default Countries

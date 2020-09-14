@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios'
 import Filter from './components/Filter'
-import Result from './components/Result'
+import Countries from './components/Countries'
 
 function App() {
 
@@ -22,6 +22,11 @@ function App() {
     setFilter(event.target.value)
   }
 
+  const showCountry = (country) => {
+    console.log('Selected', country.name)
+    setFilter(country.name)
+  }
+
   const filteredCountries = filter
     ? countries.filter(country =>
       country.name.toUpperCase().includes(filter.toUpperCase()))
@@ -30,7 +35,7 @@ function App() {
   return (
     <div>
       <Filter value={filter} onChange={handleFilterChange} />
-      <Result countries={filteredCountries} />
+      <Countries countries={filteredCountries} onSelect={showCountry} />
     </div>
   )
 }
