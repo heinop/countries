@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios'
+import Filter from './components/Filter'
+import Result from './components/Result'
 
 function App() {
+
+  const [countries, setCountries] = useState([])
+  const [filter, setFilter] = useState('')
+
+  useEffect(() => {
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(response => {
+        setCountries(response.data)
+      })
+  }, [])
+
+  const handleFilterChange = (event) => {
+    console.log('filter', event.target.value)
+    setFilter(event.target.value)
+  }
+
+  const filteredCountries = filter
+    ? countries.filter(country =>
+      country.name.toUpperCase().includes(filter.toUpperCase()))
+    : countries
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Filter value={filter} onChange={handleFilterChange} />
+      <Result countries={filteredCountries} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
