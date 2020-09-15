@@ -1,6 +1,13 @@
 import React from 'react'
+import Weather from './Weather'
+
+const imageStyle = {
+  maxWidth: '150px',
+  height: 'auto'
+}
 
 const Country = ({ country }) => {
+
   return (
     <div>
       <h2>{country.name}</h2>
@@ -12,7 +19,8 @@ const Country = ({ country }) => {
       <ul>
         {country.languages.map(language => <li key={language.iso639_1}>{language.name}</li>)}
       </ul>
-      <img src={country.flag} alt="Flag" width="300" height="300" /> 
+      <img src={country.flag} alt="Flag" style={imageStyle} /> 
+      <Weather city={country.capital} />
     </div>
   ) 
 }
